@@ -3,9 +3,13 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/database");
 
+const categoriesController = require("./categories/CategoriesController");
+const articlesController = require("./articles/ArticlesController");
+
 /* View engine */
 app.set('view engine', 'ejs');
 
+/* Static */
 app.use(express.static('public'));
 
 /* Body parser */
@@ -17,11 +21,18 @@ app.use(bodyParser.json());
 connection
     .authenticate()
     .then(() => {
-      console.log("✅ Connected to the database!");
+      console.log("✅ Connected to the 🦾 database!");
     }).catch((error) => {
       console.log(error);
     })
 
+
+app.use("/", categoriesController);
+app.use("/", articlesController);
+
+
+
+/* Docker */
 const PORT = 3000;
 const HOST = '0.0.0.0';
 
